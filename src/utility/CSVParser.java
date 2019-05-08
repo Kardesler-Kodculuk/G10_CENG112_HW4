@@ -51,6 +51,7 @@ public class CSVParser {
 		lineCount = countLines(fileName);
 		medias = new Object[lineCount];
 		populateMedias(fileName);
+//		ArrayOperations.sort(medias);
 	}
 	
 }
