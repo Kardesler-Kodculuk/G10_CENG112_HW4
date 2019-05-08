@@ -1,7 +1,7 @@
 package utility;
 
 public class ArrayOperations {
-	public static <T extends Comparable<T>> void sort(T[] array) {
+	public static <T extends Comparable<? super T>> void sort(T[] array) {
 		for (int startingIndex = 0; startingIndex < array.length; startingIndex++) {
 			for (int i = array.length; i > startingIndex; startingIndex--) {
 				T current = array[i];
