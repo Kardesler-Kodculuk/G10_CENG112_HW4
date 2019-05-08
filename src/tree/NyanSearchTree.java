@@ -43,7 +43,7 @@ class NyanBinaryNode<T extends Comparable<? super T>>{
 	 * @param node node to set.
 	 * @return true if right, false otherwise.
 	 */
-	public boolean setNode(String key, NyanBinaryNode node) {
+	public boolean setNode(String key, NyanBinaryNode<T> node) {
 		switch (key) {
 		case "L":
 			this.leftNode = node;
@@ -87,7 +87,7 @@ class NyanBinaryNode<T extends Comparable<? super T>>{
 	 * @param other other node.
 	 * @return if bigger 1, if smaller -1, if equals 0.
 	 */
-	public int compareTo(NyanBinaryNode other) {
+	public int compareTo(NyanBinaryNode<T> other) {
 		if (! equals(other)) {
 			return this.element.compareTo((T) other.getElement());
 		} else {
@@ -168,7 +168,7 @@ public class NyanSearchTree<T extends Comparable<? super T>> implements IBinaryS
 	@Override
 	public boolean contains(T entry) {
 		if (isEmpty()) return false;
-		NyanBinaryNode<T> searchNode = new NyanBinaryNode(entry);
+		NyanBinaryNode<T> searchNode = new NyanBinaryNode<T>(entry);
 		return search(searchNode, rootNode);
 	}
 
@@ -235,6 +235,34 @@ public class NyanSearchTree<T extends Comparable<? super T>> implements IBinaryS
 	public T remove(T entry) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	/**
+	 * Traverse the list inorder
+	 * @param rootNode Current node.
+	 * @param traversalArray array the nodes will be added to.
+	 * @param indexContainer index that can be shared between recursion.
+	 */
+	private void inorderTraverse(NyanBinaryNode<T> rootNode, T[] traversalArray, int[] indexContainer) {
+		if (rootNode.isLeaf()) {
+			traversalArray[indexContainer[0]] = rootNode.getElement();
+			indexContainer[0]++;
+		} else {
+			inorderTraverse(rootNode.getNode("L"), traversalArray, indexContainer);
+			traversalArray[indexContainer[0]] = rootNode.getElement();
+			indexContainer[0]++;
+			inorderTraverse(rootNode.getNode("R"), traversalArray, indexContainer);
+		}
+	}
+	
+	@Override
+	public T[] toArray() {
+		@SuppressWarnings("unchecked")
+		T[] nodeArray = (T[]) new Object[nodeCount];
+		int[] indexContainer = new int[1];
+		indexContainer[0] = 0;
+		inorderTraverse(rootNode, nodeArray, indexContainer);
+		return nodeArray;
 	}
 
 }

@@ -24,4 +24,9 @@ public interface IBinarySearchTree<T extends Comparable<? super T>> extends ITre
 	 * @return the entry removed or null if no such entry exists.
 	 */
 	public T remove(T entry);
+	/**
+	 * Return an entry consisting of elements of the tree, ordered.
+	 * @return the array.
+	 */
+	public T[] toArray();
 }
