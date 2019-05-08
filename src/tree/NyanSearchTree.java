@@ -22,11 +22,11 @@ class NyanBinaryNode<T extends Comparable<? super T>>{
 	}
 	
 	/**
-	 * 
-	 * @param key
-	 * @return
+	 * Return a node.
+	 * @param key Left or Right
+	 * @return the node or null if wrong key or maybe if node doesn't exist.
 	 */
-	private NyanBinaryNode<T> getNode(String key) {
+	public NyanBinaryNode<T> getNode(String key) {
 		switch (key) {
 		case "L":
 			return leftNode;
@@ -43,7 +43,7 @@ class NyanBinaryNode<T extends Comparable<? super T>>{
 	 * @param node node to set.
 	 * @return true if right, false otherwise.
 	 */
-	private boolean setNode(String key, NyanBinaryNode node) {
+	public boolean setNode(String key, NyanBinaryNode node) {
 		switch (key) {
 		case "L":
 			this.leftNode = node;
@@ -57,15 +57,51 @@ class NyanBinaryNode<T extends Comparable<? super T>>{
 		return true;
 	}
 	
-	private T getElement() {
+	/**
+	 * Get the element.
+	 * @return the element.
+	 */
+	public T getElement() {
 		return element;
 	}
 	
-	private void setElement(T element) {
+	/**
+	 * Set the element
+	 * @param element to set.
+	 */
+	public void setElement(T element) {
 		this.element = element;
 	}
+
+	public boolean equals(Object obj) {
+		if (obj == null) return false;
+		if (!obj.getClass().equals(obj.getClass())) return false;
+		else {
+			NyanBinaryNode<T> compareNode = (NyanBinaryNode<T>) obj;
+			return element.equals(compareNode.element);
+		}
+	}
+
+	/**
+	 * Compare nodes.
+	 * @param other other node.
+	 * @return if bigger 1, if smaller -1, if equals 0.
+	 */
+	public int compareTo(NyanBinaryNode other) {
+		if (! equals(other)) {
+			return this.element.compareTo((T) other.getElement());
+		} else {
+			return 0;
+		}
+	}
 	
-	private void compareTo(NyanBinaryNode other) {}
+	/**
+	 * Check if the node is leaf.
+	 * @return True if leaf, false otherwise.
+	 */
+	public boolean isLeaf() {
+		return (leftNode == null && rightNode == null);
+	}
 }
 
 
@@ -74,6 +110,10 @@ class NyanBinaryNode<T extends Comparable<? super T>>{
  */
 public class NyanSearchTree<T extends Comparable<? super T>> implements IBinarySearchTree<T> {
 
+	private int height;
+	private int nodeCount;
+	private NyanBinaryNode<T> rootNode;
+	
 	@Override
 	public T getRootData() {
 		// TODO Auto-generated method stub
@@ -94,14 +134,14 @@ public class NyanSearchTree<T extends Comparable<? super T>> implements IBinaryS
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
+		return (rootNode == null);
 	}
 
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
-		
+		this.rootNode = null;
+		this.height = 0;
+		this.nodeCount = 0;
 	}
 
 	@Override
@@ -112,14 +152,22 @@ public class NyanSearchTree<T extends Comparable<? super T>> implements IBinaryS
 
 	@Override
 	public T getEntry(T entry) {
-		// TODO Auto-generated method stub
-		return null;
+		if (contains(entry)) {
+			return entry;
+		} else {
+			return null;
+		}
+	}
+
+	private void addEntry(NyanBinaryNode<T> entryNode, NyanBinaryNode<T> node) {
+		if (node.isLeaf()) {
+			if (entryNode)
+		}
 	}
 
 	@Override
 	public void addEntry(T entry) {
-		// TODO Auto-generated method stub
-		
+				
 	}
 
 	@Override
