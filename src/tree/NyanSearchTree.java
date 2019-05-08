@@ -9,13 +9,13 @@ class NyanBinaryNode<T extends Comparable<? super T>>{
 	private NyanBinaryNode<T> leftNode;
 	private NyanBinaryNode<T> rightNode;
 	
-	private NyanBinaryNode() {
+	public NyanBinaryNode() {
 		this(null);
 	}
-	private NyanBinaryNode(T element) {
+	public NyanBinaryNode(T element) {
 		this(element, null, null);
 	}
-	private NyanBinaryNode(T element, NyanBinaryNode<T> leftNode, NyanBinaryNode<T> rightNode) {
+	public NyanBinaryNode(T element, NyanBinaryNode<T> leftNode, NyanBinaryNode<T> rightNode) {
 		this.element = element;
 		this.leftNode = leftNode;
 		this.rightNode = rightNode;
@@ -116,20 +116,21 @@ public class NyanSearchTree<T extends Comparable<? super T>> implements IBinaryS
 	
 	@Override
 	public T getRootData() {
-		// TODO Auto-generated method stub
-		return null;
+		if (!isEmpty()) {
+			return rootNode.getElement();
+		} else {
+			return null;
+		}
 	}
 
 	@Override
 	public int getHeight() {
-		// TODO Auto-generated method stub
-		return 0;
+		return height;
 	}
 
 	@Override
 	public int getNumberOfNodes() {
-		// TODO Auto-generated method stub
-		return 0;
+		return nodeCount;
 	}
 
 	@Override
@@ -144,10 +145,31 @@ public class NyanSearchTree<T extends Comparable<? super T>> implements IBinaryS
 		this.nodeCount = 0;
 	}
 
+	/**
+	 * Search the tree for a trinket, for a sign, for an element.
+	 * @param searchNode Node that contains the element to be searched.
+	 * @param node
+	 * @return
+	 */
+	private boolean search(NyanBinaryNode<T> searchNode, NyanBinaryNode<T> node) {
+		if (node.equals(searchNode)) {
+			return true;
+		} else if (node.isLeaf() && ! node.equals(searchNode)) {
+			return false;
+		} else {
+			if (searchNode.compareTo(node) > 0) {
+				return search(searchNode, node.getNode("R"));
+			} else {
+				return search(searchNode, node.getNode("L"));
+			}
+		}
+	}
+
 	@Override
 	public boolean contains(T entry) {
-		// TODO Auto-generated method stub
-		return false;
+		if (isEmpty()) return false;
+		NyanBinaryNode<T> searchNode = new NyanBinaryNode(entry);
+		return search(searchNode, rootNode);
 	}
 
 	@Override
@@ -159,15 +181,54 @@ public class NyanSearchTree<T extends Comparable<? super T>> implements IBinaryS
 		}
 	}
 
-	private void addEntry(NyanBinaryNode<T> entryNode, NyanBinaryNode<T> node) {
+	/**
+	 * Perhaps the height has to change, perhaps the new node is in a different height.
+	 * Fear not, for that, we have the candidate height! Why? Because the addEntry function
+	 * has a lot of if-elses, which raises its complexity, therefore I will hide this if-else
+	 * Chain into this method!
+	 * @param candidateHeight - A candidate to become the new this.height.
+	 */
+	private void updateHeight(int candidateHeight) {
+		if (candidateHeight > height) {
+			this.height = candidateHeight;
+		}
+	}
+
+	/**
+	 * A private recursive method to add an entry
+	 * @param entryNode The new element put in a node.
+	 * @param node the current node in the recursion.
+	 * @param depth depth we are searching in, hopefully not too deep, because if we are,
+	 * don't forget that Ph'nglui mglw'nafh Cthulhu R'lyeh wgah'nagl fhtagn.
+	 */
+	private void addEntry(NyanBinaryNode<T> entryNode, NyanBinaryNode<T> node, int depth) {
+		depth++;
 		if (node.isLeaf()) {
-			if (entryNode)
+			if (entryNode.compareTo(node) >= 0) {
+				node.setNode("R", entryNode);
+			} else {
+				node.setNode("L", entryNode);
+			}
+			
+		} else {
+			if (entryNode.compareTo(node) >= 0) {
+				addEntry(entryNode, node.getNode("R"), depth);
+			} else {
+				addEntry(entryNode, node.getNode("L"), depth);
+			}
 		}
 	}
 
 	@Override
 	public void addEntry(T entry) {
-				
+		NyanBinaryNode<T> newElementNode = new NyanBinaryNode<T>(entry);
+		if (rootNode == null) {
+			this.rootNode = newElementNode;
+			updateHeight(1);
+		} else {
+			addEntry(newElementNode, rootNode, 0);
+		}
+		nodeCount++;
 	}
 
 	@Override
