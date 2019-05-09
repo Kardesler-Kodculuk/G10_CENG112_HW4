@@ -37,7 +37,20 @@ public class UserInput {
 		}
 	}
 	
-	private static void printHigherPriced(int range, String higerLower) {}
+	private static void printHigherPriced(int price, String higherLower, IMedia[] sortedArray) {
+		boolean printFlag = false;
+		IMedia checker = new Book("At the Mountains of Madness", price, 1936, "H.P. Lovecraft");
+		switch (higherLower) {
+		case "higher":
+			for (IMedia media : sortedArray) {
+				if (printFlag) {
+					System.out.println(media);
+				} else if (media.compareTo(checker) >= 0) {
+					printFlag = true;
+				}
+			} //Not finished all cases.
+		}
+	}
 	private static String takeUserInput(String prompt) {
 		Scanner userInput = new Scanner(System.in);
 		System.out.println(prompt);
