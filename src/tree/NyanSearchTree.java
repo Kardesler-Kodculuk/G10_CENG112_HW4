@@ -203,16 +203,15 @@ public class NyanSearchTree<T extends Comparable<T>> implements IBinarySearchTre
 	 */
 	private void addEntry(NyanBinaryNode<T> entryNode, NyanBinaryNode<T> node, int depth) {
 		depth++;
-		if (node.isLeaf()) {
-			if (entryNode.compareTo(node) >= 0) {
+		if (entryNode.compareTo(node) >= 0) {
+			if (node.getNode("R") == null) {
 				node.setNode("R", entryNode);
 			} else {
-				node.setNode("L", entryNode);
-			}
-			
-		} else {
-			if (entryNode.compareTo(node) >= 0) {
 				addEntry(entryNode, node.getNode("R"), depth);
+			}
+		} else {
+			if (node.getNode("L") == null) {
+				node.setNode("L", entryNode);
 			} else {
 				addEntry(entryNode, node.getNode("L"), depth);
 			}
@@ -258,7 +257,7 @@ public class NyanSearchTree<T extends Comparable<T>> implements IBinarySearchTre
 	@Override
 	public T[] toArray() {
 		@SuppressWarnings("unchecked")
-		T[] nodeArray = (T[]) new Object[nodeCount];
+		T[] nodeArray = (T[]) new Comparable[nodeCount];
 		int[] indexContainer = new int[1];
 		indexContainer[0] = 0;
 		inorderTraverse(rootNode, nodeArray, indexContainer);

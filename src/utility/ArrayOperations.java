@@ -5,7 +5,7 @@ import internals.IMedia;
 public class ArrayOperations {
 	public static <T extends Comparable<? super T>> void sort(T[] feedingArray) {
 		for (int startingIndex = 0; startingIndex < feedingArray.length; startingIndex++) {
-			for (int i = feedingArray.length; i > startingIndex; startingIndex--) {
+			for (int i = (feedingArray.length - 1); i > startingIndex; i--) {
 				T current = feedingArray[i];
 				if (current.compareTo(feedingArray[i - 1]) <= 0) {
 					feedingArray[i] = feedingArray[i - 1];
