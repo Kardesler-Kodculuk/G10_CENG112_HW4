@@ -1,6 +1,6 @@
 package internals;
 
-public class Book<T extends Comparable<? super T>> implements IMedia<T> {
+public class Book implements IMedia {
 
 	private static final String type = "Book";
 	private String bookName;
@@ -56,6 +56,12 @@ public class Book<T extends Comparable<? super T>> implements IMedia<T> {
 	@Override
 	public int mediaYear() {
 		return this.publishYear;
+	}
+
+	@Override
+	public int compareTo(IMedia o) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

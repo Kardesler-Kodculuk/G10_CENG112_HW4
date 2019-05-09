@@ -4,7 +4,7 @@
 package tree;
 
 
-class NyanBinaryNode<T extends Comparable<? super T>>{
+class NyanBinaryNode<T extends Comparable<T>>{
 	private T element;
 	private NyanBinaryNode<T> leftNode;
 	private NyanBinaryNode<T> rightNode;
@@ -108,7 +108,7 @@ class NyanBinaryNode<T extends Comparable<? super T>>{
 /**
  * Binary search tree implementation.
  */
-public class NyanSearchTree<T extends Comparable<? super T>> implements IBinarySearchTree<T> {
+public class NyanSearchTree<T extends Comparable<T>> implements IBinarySearchTree<T> {
 
 	private int height;
 	private int nodeCount;

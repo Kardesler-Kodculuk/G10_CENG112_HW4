@@ -4,15 +4,68 @@ import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-
+import internals.*;
+import tree.*;
 
 public class CSVParser {
 
-	private Object[] medias;
+	private IMedia[] medias;
 	private int lineCount;
+	private IBinarySearchTree<IMedia> tree;
 	
-	private static Object generateMedia(String mediaLine) {return null;};
-	private static Object generateSearchTree(Object[] feedingArray) {return null;};
+	
+	/**
+	 * Convert the given csv line to its media counterpart
+	 * @param mediaLine line containing the info
+	 * @return media object.
+	 */
+	private static IMedia generateMedia(String mediaLine) {
+		String info[] = mediaLine.split(",");
+		IMedia media = null;
+		switch (info[0]) {
+		case "Movie":
+			media = new Movie(info[1], Integer.parseInt(info[2]), Integer.parseInt(info[3]), info[4], info[5], info[6]);
+			break;
+		case "Book":
+			media = new Book(info[1], Integer.parseInt(info[2]), Integer.parseInt(info[3]), info[4]);
+			break;
+		default:
+			break;
+		}
+		
+		return media;
+	}
+	
+	/**
+	 * Narrow down the array and add elements in a way that will make the tree balanced.
+	 * @param feedingArray - Array elements are drawn from.
+	 * @param tree - tree elements will be added to.
+	 * @param start - starting index.
+	 * @param end - ending index.
+	 */
+	private static void narrowingFeeder(IMedia[] feedingArray, IBinarySearchTree tree, int start, int end) {
+		int mid = (end - start)/2;
+		tree.addEntry(feedingArray[mid]);
+		narrowingFeeder(feedingArray, tree, start, mid);
+		narrowingFeeder(feedingArray, tree, mid + 1, end);
+	}
+
+	/**
+	 * Create a balanced binary search tree from the elements of an array.
+	 * @param feedingArray Array elements are stored in.
+	 * @return the tree object.
+	 */
+	private static IBinarySearchTree<IMedia> generateSearchTree(IMedia[] feedingArray) {
+	IBinarySearchTree<IMedia> tree = new NyanSearchTree<IMedia>();
+	narrowingFeeder(feedingArray, tree, 0, feedingArray.length);
+	return tree;
+	}
+	
+	/**
+	 * Generate a scanner to read a specific file.
+	 * @param fileName name of the file to be read.
+	 * @return the scanner object
+	 */
 	private static Scanner generateScanner(String fileName) {
 		File targetFile = new File(fileName);
 		Scanner fileReader = null;
@@ -24,6 +77,12 @@ public class CSVParser {
 		return fileReader;
 	}
 	
+	/**
+	 * Count the lines in the given file
+	 * @param fileName name of the file lines shall be counted at, it shall count 'til the line count, line count
+	 * i is the number thou shall count to, and number of counting shall be i.
+	 * @return the count of lines.
+	 */
 	private static int countLines(String fileName) {
 		Scanner fileScanner = generateScanner(fileName);
 		String temp = null;
@@ -33,9 +92,14 @@ public class CSVParser {
 			lineCount++;
 		}
 		temp = null;
+		fileScanner.close();
 		return lineCount;
 	}
 	
+	/**
+	 * Populate the medias array by creating mass media.
+	 * @param fileName Name of the file containing the name of the medias.
+	 */
 	private void populateMedias(String fileName) {
 		Scanner fileReader = generateScanner(fileName);
 		int index = 0;
@@ -45,13 +109,18 @@ public class CSVParser {
 			medias[index] = generateMedia(currentLine);
 			index++;
 		}
+		fileReader.close();
 	}
 	
 	public CSVParser(String fileName) {
 		lineCount = countLines(fileName);
-		medias = new Object[lineCount];
+		medias = new IMedia[lineCount];
 		populateMedias(fileName);
-//		ArrayOperations.sort(medias);
+		ArrayOperations.sort(medias);
+		this.tree = generateSearchTree(medias); 
 	}
 	
+	public IBinarySearchTree<IMedia> getTree() {
+		return tree;
+	}
 }

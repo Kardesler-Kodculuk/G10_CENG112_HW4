@@ -1,6 +1,6 @@
 package internals;
 
-public interface IMedia<T extends Comparable<? super T>> {
+public interface IMedia extends Comparable<IMedia> {
 	/**
 	 * Returns the name of the media
 	 * 
