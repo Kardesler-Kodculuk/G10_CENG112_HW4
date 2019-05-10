@@ -83,4 +83,17 @@ public class Book implements IMedia
 		}
 	}
 
+	@Override
+	public boolean equals(IMedia media)
+	{
+		if (this.compareTo(media) == 0)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
 }

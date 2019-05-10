@@ -25,5 +25,12 @@ public interface IMedia extends Comparable<IMedia> {
 	 * @return year
 	 */
 	public int mediaYear(); 
+	/**
+	 * Check the media's price is equal or not
+	 * 
+	 * @param media - media to compare
+	 * @return true if equal, false if not
+	 */
+	public boolean equals(IMedia media);
 
 }
