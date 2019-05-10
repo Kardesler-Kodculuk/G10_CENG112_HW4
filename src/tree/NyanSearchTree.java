@@ -243,7 +243,9 @@ public class NyanSearchTree<T extends Comparable<T>> implements IBinarySearchTre
 	 * @param indexContainer index that can be shared between recursion.
 	 */
 	private void inorderTraverse(NyanBinaryNode<T> rootNode, T[] traversalArray, int[] indexContainer) {
-		if (rootNode.isLeaf()) {
+		if (rootNode == null) {
+			;
+		} else if (rootNode.isLeaf()) {
 			traversalArray[indexContainer[0]] = rootNode.getElement();
 			indexContainer[0]++;
 		} else {
