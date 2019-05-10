@@ -70,9 +70,20 @@ public class Movie implements IMedia {
 	}
 
 	@Override
-	public int compareTo(IMedia o) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int compareTo(IMedia o)
+	{
+		if (this.price > o.mediaPrice())
+		{
+			return 1;
+		}
+		else if (this.price == o.mediaPrice())
+		{
+			return 0;
+		}
+		else
+		{
+			return -1;
+		}
 	}
 
 }
