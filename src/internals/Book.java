@@ -1,6 +1,7 @@
 package internals;
 
-public class Book implements IMedia {
+public class Book implements IMedia
+{
 
 	private static final String type = "Book";
 	private String bookName;
@@ -9,7 +10,8 @@ public class Book implements IMedia {
 	private String authorName;
 
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		return "Book [type=" + type + ", bookName=" + bookName + ", price=" + price + ", publishYear=" + publishYear
 				+ ", authorName=" + authorName + "]";
 	}
@@ -17,12 +19,13 @@ public class Book implements IMedia {
 	/**
 	 * Default constructor for Book class
 	 * 
-	 * @param bookname - name of the book
-	 * @param price - price of the book
+	 * @param bookname    - name of the book
+	 * @param price       - price of the book
 	 * @param publishYear - publish year of the book
-	 * @param authorName - name of the book's author
+	 * @param authorName  - name of the book's author
 	 */
-	public Book(String bookname, int price, int publishYear, String authorName) {
+	public Book(String bookname, int price, int publishYear, String authorName)
+	{
 		this.bookName = bookname;
 		this.price = price;
 		this.publishYear = publishYear;
@@ -34,34 +37,50 @@ public class Book implements IMedia {
 	 * 
 	 * @return name surname
 	 */
-	public String getAuthor() {
+	public String getAuthor()
+	{
 		return this.authorName;
 	}
 
 	@Override
-	public String mediaName() {
+	public String mediaName()
+	{
 		return this.bookName;
 	}
 
 	@Override
-	public String mediaType() {
+	public String mediaType()
+	{
 		return Book.type;
 	}
 
 	@Override
-	public int mediaPrice() {
+	public int mediaPrice()
+	{
 		return this.price;
 	}
 
 	@Override
-	public int mediaYear() {
+	public int mediaYear()
+	{
 		return this.publishYear;
 	}
 
 	@Override
-	public int compareTo(IMedia o) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int compareTo(IMedia o)
+	{
+		if (this.price > o.mediaPrice())
+		{
+			return 1;
+		}
+		else if (this.price == o.mediaPrice())
+		{
+			return 0;
+		}
+		else
+		{
+			return -1;
+		}
 	}
 
 }
