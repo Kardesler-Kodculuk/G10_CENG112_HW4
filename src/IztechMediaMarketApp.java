@@ -1,12 +1,9 @@
 import java.lang.reflect.Executable;
 import java.util.Arrays;
 
-import internals.IMedia;
-import tree.IBinarySearchTree;
-import tree.NyanSearchTree;
-import utility.ArrayOperations;
-import utility.CSVParser;
-import utility.UserInput;
+import internals.*;
+import tree.*;
+import utility.*;
 
 public class IztechMediaMarketApp {
 

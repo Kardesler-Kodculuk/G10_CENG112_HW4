@@ -1,5 +1,6 @@
 package utility;
 
+import java.util.Arrays;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -24,7 +25,7 @@ public class CSVParser {
 		IMedia media = null;
 		switch (info[0]) {
 		case "Movie":
-			media = new Movie(info[1], Integer.parseInt(info[2]), Integer.parseInt(info[3]), info[4], info[5], info[6]);
+			media = new Movie(info[1], Integer.parseInt(info[2]), Integer.parseInt(info[3]), info[4], info[5], (info.length == 7) ? info[6]: "None.");
 			break;
 		case "Book":
 			media = new Book(info[1], Integer.parseInt(info[2]), Integer.parseInt(info[3]), info[4]);
@@ -87,9 +88,13 @@ public class CSVParser {
 		Scanner fileScanner = generateScanner(fileName);
 		String temp = null;
 		int lineCount = 0;
-		while (fileScanner.hasNext()) {
+		while (fileScanner.hasNextLine()) {
 			temp = fileScanner.nextLine();
-			lineCount++;
+			if (temp == null || temp.equals("")) {
+				continue;
+			} else {
+				lineCount++;
+			}
 		}
 		temp = null;
 		fileScanner.close();
@@ -105,9 +110,13 @@ public class CSVParser {
 		int index = 0;
 		String currentLine;
 		while (fileReader.hasNextLine()) {
-			currentLine = fileReader.nextLine(); 
-			medias[index] = generateMedia(currentLine);
-			index++;
+			currentLine = fileReader.nextLine();
+			if (currentLine == null || currentLine.equals("")) {
+				continue;
+			} else {
+				medias[index] = generateMedia(currentLine);
+				index++;
+			}
 		}
 		fileReader.close();
 	}

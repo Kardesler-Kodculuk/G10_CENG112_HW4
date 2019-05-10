@@ -99,7 +99,7 @@ public class UserInput {
 		printArray(movieExample, sortedArray, false);
 	}
 
-	private static void userInput(IBinarySearchTree<IMedia> tree) {
+	public static void userInput(IBinarySearchTree<IMedia> tree) {
 		IMedia[] sortedArray = tree.toArray();
 		minMaxInputs(sortedArray);
 		rangeInputs(sortedArray);
