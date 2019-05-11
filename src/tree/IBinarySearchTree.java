@@ -29,4 +29,9 @@ public interface IBinarySearchTree<T extends Comparable<? super T>> extends ITre
 	 * @return the array.
 	 */
 	public T[] toArray();
+	/**
+	 * Return the root node.
+	 * @return the root node.
+	 */
+	public IBinaryNode<T> getRootNode();
 }

@@ -4,10 +4,10 @@
 package tree;
 
 
-class NyanBinaryNode<T extends Comparable<T>>{
+class NyanBinaryNode<T extends Comparable<? super T>> implements IBinaryNode<T>{
 	private T element;
-	private NyanBinaryNode<T> leftNode;
-	private NyanBinaryNode<T> rightNode;
+	private IBinaryNode<T> leftNode;
+	private IBinaryNode<T> rightNode;
 	
 	public NyanBinaryNode() {
 		this(null);
@@ -26,7 +26,8 @@ class NyanBinaryNode<T extends Comparable<T>>{
 	 * @param key Left or Right
 	 * @return the node or null if wrong key or maybe if node doesn't exist.
 	 */
-	public NyanBinaryNode<T> getNode(String key) {
+	@Override
+	public IBinaryNode<T> getNode(String key) {
 		switch (key) {
 		case "L":
 			return leftNode;
@@ -43,7 +44,8 @@ class NyanBinaryNode<T extends Comparable<T>>{
 	 * @param node node to set.
 	 * @return true if right, false otherwise.
 	 */
-	public boolean setNode(String key, NyanBinaryNode<T> node) {
+	@Override
+	public boolean setNode(String key, IBinaryNode<T> node) {
 		switch (key) {
 		case "L":
 			this.leftNode = node;
@@ -61,6 +63,7 @@ class NyanBinaryNode<T extends Comparable<T>>{
 	 * Get the element.
 	 * @return the element.
 	 */
+	@Override
 	public T getElement() {
 		return element;
 	}
@@ -69,6 +72,7 @@ class NyanBinaryNode<T extends Comparable<T>>{
 	 * Set the element
 	 * @param element to set.
 	 */
+	@Override
 	public void setElement(T element) {
 		this.element = element;
 	}
@@ -87,7 +91,7 @@ class NyanBinaryNode<T extends Comparable<T>>{
 	 * @param other other node.
 	 * @return if bigger 1, if smaller -1, if equals 0.
 	 */
-	public int compareTo(NyanBinaryNode<T> other) {
+	public int compareTo(IBinaryNode<T> other) {
 		if (! equals(other)) {
 			return this.element.compareTo((T) other.getElement());
 		} else {
@@ -151,7 +155,7 @@ public class NyanSearchTree<T extends Comparable<T>> implements IBinarySearchTre
 	 * @param node
 	 * @return
 	 */
-	private boolean search(NyanBinaryNode<T> searchNode, NyanBinaryNode<T> node) {
+	private boolean search(IBinaryNode<T> searchNode, IBinaryNode<T> node) {
 		if (node.equals(searchNode)) {
 			return true;
 		} else if (node.isLeaf() && ! node.equals(searchNode)) {
@@ -201,7 +205,7 @@ public class NyanSearchTree<T extends Comparable<T>> implements IBinarySearchTre
 	 * @param depth depth we are searching in, hopefully not too deep, because if we are,
 	 * don't forget that Ph'nglui mglw'nafh Cthulhu R'lyeh wgah'nagl fhtagn.
 	 */
-	private void addEntry(NyanBinaryNode<T> entryNode, NyanBinaryNode<T> node, int depth) {
+	private void addEntry(IBinaryNode<T> entryNode, IBinaryNode<T> node, int depth) {
 		depth++;
 		if (entryNode.compareTo(node) >= 0) {
 			if (node.getNode("R") == null) {
@@ -242,7 +246,7 @@ public class NyanSearchTree<T extends Comparable<T>> implements IBinarySearchTre
 	 * @param traversalArray array the nodes will be added to.
 	 * @param indexContainer index that can be shared between recursion.
 	 */
-	private void inorderTraverse(NyanBinaryNode<T> rootNode, T[] traversalArray, int[] indexContainer) {
+	private void inorderTraverse(IBinaryNode<T> rootNode, T[] traversalArray, int[] indexContainer) {
 		if (rootNode == null) {
 			;
 		} else if (rootNode.isLeaf()) {
@@ -264,6 +268,17 @@ public class NyanSearchTree<T extends Comparable<T>> implements IBinarySearchTre
 		indexContainer[0] = 0;
 		inorderTraverse(rootNode, nodeArray, indexContainer);
 		return nodeArray;
+	}
+	
+	@Override
+	public String toString() {
+		String output = "";
+		return null;
+	}
+	
+	@Override
+	public IBinaryNode<T> getRootNode() {
+		return this.rootNode;
 	}
 
 }
