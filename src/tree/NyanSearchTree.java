@@ -106,6 +106,10 @@ class NyanBinaryNode<T extends Comparable<? super T>> implements IBinaryNode<T>{
 	public boolean isLeaf() {
 		return (leftNode == null && rightNode == null);
 	}
+	@Override
+	public IBinaryNode<T> getNext() {
+		return getNode("R");
+	}
 }
 
 

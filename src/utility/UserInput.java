@@ -1,10 +1,15 @@
 package utility;
 
 import java.lang.reflect.Executable;
+import java.util.Arrays;
 import java.util.Scanner;
+
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 import internals.*;
 import tree.IBinarySearchTree;
+import tree.ITreeIterator;
+import tree.NyanTreeIterator;
 
 public class UserInput {
 	private static String getCreator(IMedia media) {
@@ -100,7 +105,13 @@ public class UserInput {
 	}
 
 	public static void userInput(IBinarySearchTree<IMedia> tree) {
-		IMedia[] sortedArray = tree.toArray();
+		ITreeIterator<IMedia> ismailTarator = new NyanTreeIterator<IMedia>(tree);
+		IMedia[] sortedArray = new IMedia[tree.getNumberOfNodes()];
+		int i = 0;
+		while (ismailTarator.hasNext()) {
+			System.out.println(smailTarator.next());
+		}
+		System.out.println(Arrays.toString(sortedArray));
 		minMaxInputs(sortedArray);
 		rangeInputs(sortedArray);
 		sortInputs(sortedArray);
