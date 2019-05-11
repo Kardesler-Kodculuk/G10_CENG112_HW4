@@ -15,10 +15,9 @@ public class IsmailTarator<T extends Comparable<? super T>> implements ITreeIter
 	/**
 	 * @param currentNode
 	 */
-	@SuppressWarnings("unchecked")
-	public IsmailTarator(IBinarySearchTree<T> tree)
+	public IsmailTarator(IBinaryNode<IMedia> currentNode)
 	{
-		this.currentNode = (IBinaryNode<IMedia>) tree.getRootNode();
+		this.currentNode = currentNode;
 	}
 
 	@Override
