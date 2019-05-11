@@ -3,7 +3,7 @@
  */
 package tree;
 
-class BinaryNode<T>
+class BinaryNode<T extends Comparable<? super T>> implements IBinaryNode<T>
 {
 	private T data;
 	private BinaryNode<T> leftChild;
@@ -20,6 +20,7 @@ class BinaryNode<T>
 	{
 		this(null);
 	}
+
 	/**
 	 * @return the data
 	 */
@@ -35,7 +36,7 @@ class BinaryNode<T>
 	{
 		this.data = data;
 	}
-
+	
 	/**
 	 * @return the leftChild
 	 */
@@ -51,36 +52,91 @@ class BinaryNode<T>
 	{
 		return rightChild;
 	}
-//	
-//	public boolean hasNode(String key)
-//	{
-//		switch(key)
-//		{
-//		case "L":
-//			if (this.leftChild != null)
-//				{
-//					return true;
-//				}
-//		case "R":
-//			if (this.rightChild != null)
-//			{
-//				return true;
-//			}
-//		}
-//		return false;
-//	}
-//	
-//	public boolean isLeaf()
-//	{
-//		if (this.hasNode("L") || this.hasNode("R"))
-//		{
-//			return false;
-//		}
-//		else
-//		{
-//			return true;
-//		}
-//	}
+
+	@Override
+	public IBinaryNode<T> getNode(String key)
+	{
+		return this;
+	}
+
+	@Override
+	public IBinaryNode<T> getNext()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean setNode(String key, IBinaryNode<T> node)
+	{
+		if (key == "L" || key == "R")
+		{
+			switch(key)
+			{
+			case "L":
+				this.leftChild = (BinaryNode<T>) node;
+				break;
+			case "R":
+				this.rightChild = (BinaryNode<T>) node;
+				break;
+			}
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+		
+	}
+
+	@Override
+	public T getElement()
+	{
+		return this.getData();
+	}
+
+	@Override
+	public void setElement(T value)
+	{
+		this.setData(value);
+	}
+
+	@Override
+	public int compareTo(IBinaryNode<T> other)
+	{
+		return data.compareTo(other.getElement());
+	}
+
+	public boolean hasNode(String key)
+	{
+		switch(key)
+		{
+		case "L":
+			if (this.leftChild != null)
+				{
+					return true;
+				}
+		case "R":
+			if (this.rightChild != null)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	@Override
+	public boolean isLeaf()
+	{
+		if (this.hasNode("L") || this.hasNode("R"))
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
 
 }
 
@@ -271,6 +327,12 @@ public class BinalySearchTree<T extends Comparable<T>> implements IBinarySearchT
 		T[] sortedArray = (T[]) new Comparable[numberOfNodes];
 		inOrderTraverse(root, sortedArray);
 		return sortedArray;
+	}
+
+	@Override
+	public IBinaryNode<T> getRootNode()
+	{
+		return this.root;
 	}
 
 }

@@ -9,6 +9,7 @@ import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 import internals.*;
 import tree.IBinarySearchTree;
 import tree.ITreeIterator;
+import tree.IsmailTarator;
 import tree.NyanTreeIterator;
 
 public class UserInput {
@@ -105,11 +106,12 @@ public class UserInput {
 	}
 
 	public static void userInput(IBinarySearchTree<IMedia> tree) {
-		ITreeIterator<IMedia> ismailTarator = new NyanTreeIterator<IMedia>(tree);
-		IMedia[] sortedArray = new IMedia[tree.getNumberOfNodes()];
-		int i = 0;
-		while (ismailTarator.hasNext()) {
-			System.out.println(smailTarator.next());
+		ITreeIterator<IMedia> ismailTarator = new IsmailTarator<IMedia>(tree);
+		IMedia[] sortedArray = new IMedia[tree.getNumberOfNodes() - 1]; // TODO
+		for (int i = 0; i < tree.getNumberOfNodes() - 1; i++) // TODO
+		{
+			sortedArray[i] = ismailTarator.next();
+			System.out.println(sortedArray[i]);
 		}
 		System.out.println(Arrays.toString(sortedArray));
 		minMaxInputs(sortedArray);
