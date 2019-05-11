@@ -106,16 +106,15 @@ public class UserInput {
 	}
 
 	public static void userInput(IBinarySearchTree<IMedia> tree) {
-		ITreeIterator<IMedia> ismailTarator = new IsmailTarator<IMedia>(tree.getRootNode());
+		ITreeIterator<IMedia> ismailTarator = new IsmailTarator<IMedia>(tree);
 		IMedia[] sortedArray = new IMedia[tree.getNumberOfNodes() - 1]; // TODO
 		for (int i = 0; i < tree.getNumberOfNodes() - 1; i++) // TODO
 		{
 			sortedArray[i] = ismailTarator.next();
-			System.out.println(sortedArray[i]);
 		}
 		System.out.println(Arrays.toString(sortedArray));
-		minMaxInputs(sortedArray);
+/*		minMaxInputs(sortedArray);
 		rangeInputs(sortedArray);
-		sortInputs(sortedArray);
+		sortInputs(sortedArray); */
 	}
 }
