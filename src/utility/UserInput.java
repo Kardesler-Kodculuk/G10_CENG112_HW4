@@ -68,29 +68,27 @@ public class UserInput {
 		System.out.println(ArrayOperations.convertToString(filteredArray));
 	}
 	
-	private static String takeUserInput(String prompt) {
-		Scanner userInput = new Scanner(System.in);
+	private static String takeUserInput(String prompt, Scanner userInput) {
 		System.out.println(prompt);
 		String input = userInput.next();
-		userInput.close();
 		return input;
 	}
 
-	private static void minMaxInputs(IMedia[] sortedArray) {
-		String authorMin = takeUserInput("Enter the name of the author whose lowest priced book you want to see: ");
+	private static void minMaxInputs(IMedia[] sortedArray, Scanner userInput) {
+		String authorMin = takeUserInput("Enter the name of the author whose lowest priced book you want to see: ", userInput);
 		System.out.println(returnByPrice("min", "Book", authorMin, sortedArray));
-		String authorMax = takeUserInput("Enter the name of the author whose highest priced book you want to see: ");
+		String authorMax = takeUserInput("Enter the name of the author whose highest priced book you want to see: ", userInput);
 		System.out.println(returnByPrice("max", "Book", authorMax, sortedArray));
-		String directorMin = takeUserInput("Enter the name of the director whose lowest priced movie you want to see: ");
+		String directorMin = takeUserInput("Enter the name of the director whose lowest priced movie you want to see: ", userInput);
 		System.out.println(returnByPrice("min", "Movie", directorMin, sortedArray));
-		String directorMax = takeUserInput("Enter the name of the director whose highest priced movie you want to see: ");
+		String directorMax = takeUserInput("Enter the name of the director whose highest priced movie you want to see: ", userInput);
 		System.out.println(returnByPrice("max", "Movie", directorMax, sortedArray));
 	}
 	
-	private static void rangeInputs(IMedia[] sortedArray) {
-		int rangeGreater = Integer.parseInt(takeUserInput("Enter the price of which the more expensive media will be printed: "));
+	private static void rangeInputs(IMedia[] sortedArray, Scanner userInput) {
+		int rangeGreater = Integer.parseInt(takeUserInput("Enter the price of which the more expensive media will be printed: ", userInput));
 		printRangePriced(rangeGreater, "higher", sortedArray);
-		int rangeLower = Integer.parseInt(takeUserInput("Enter the prive of which the cheaper media will be printed: "));
+		int rangeLower = Integer.parseInt(takeUserInput("Enter the prive of which the cheaper media will be printed: ", userInput));
 		printRangePriced(rangeLower, "lower", sortedArray);
 	}
 	
@@ -106,15 +104,18 @@ public class UserInput {
 	}
 
 	public static void userInput(IBinarySearchTree<IMedia> tree) {
+		Scanner userInput = new Scanner(System.in);
 		ITreeIterator<IMedia> ismailTarator = new IsmailTarator<IMedia>(tree);
 		IMedia[] sortedArray = new IMedia[tree.getNumberOfNodes() - 1]; // TODO
 		for (int i = 0; i < tree.getNumberOfNodes() - 1; i++) // TODO
 		{
 			sortedArray[i] = ismailTarator.next();
+//			System.out.println(sortedArray[i]);
 		}
-		System.out.println(Arrays.toString(sortedArray));
-/*		minMaxInputs(sortedArray);
-		rangeInputs(sortedArray);
-		sortInputs(sortedArray); */
+//		System.out.println(Arrays.toString(sortedArray));
+//		minMaxInputs(sortedArray, userInput);
+		rangeInputs(sortedArray, userInput);
+//		sortInputs(sortedArray);
+		userInput.close();
 	}
 }

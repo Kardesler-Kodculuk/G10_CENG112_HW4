@@ -14,7 +14,9 @@ public class IztechMediaMarketApp {
 /*		IBinarySearchTree<Integer> tree = new NyanSearchTree<Integer>();
 		Integer[] cat = {15, 23, 454, 643, 234, 123, 321, 321, 12, 1, 2, 3, 4, 7, 8, 4, 3, 2, 100, 156, 1000, 96, 567, 1321, -54, -345};
 		for (Integer entry: cat) {
-			tree.addEntry(entry); */
+			tree.addEntry(entry);
+		Book book = new Book("Cat", 15, 34, "Ismail Tarator");
+		System.out.println(book.mediaType()); */
 		}
 	}
 
