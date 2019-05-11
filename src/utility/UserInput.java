@@ -106,7 +106,7 @@ public class UserInput {
 	}
 
 	public static void userInput(IBinarySearchTree<IMedia> tree) {
-		ITreeIterator<IMedia> ismailTarator = new IsmailTarator<IMedia>(tree);
+		ITreeIterator<IMedia> ismailTarator = new IsmailTarator<IMedia>(tree.getRootNode());
 		IMedia[] sortedArray = new IMedia[tree.getNumberOfNodes() - 1]; // TODO
 		for (int i = 0; i < tree.getNumberOfNodes() - 1; i++) // TODO
 		{
