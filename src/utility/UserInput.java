@@ -13,109 +13,177 @@ import tree.IsmailTarator;
 import tree.NyanTreeIterator;
 
 public class UserInput {
-	private static String getCreator(IMedia media) {
-		String creator;
-		if (media.mediaType() == "Movie") {
-			creator = ((Movie) media).getDirector();
-		} else {
-			creator = ((Book) media).getAuthor();
-		}
-
-		return creator;
-	}
-
-	private static IMedia returnByPrice(String maxmin, String type, String creator, IMedia[] sortedArray) {
-		switch (maxmin) {
-		case "max":
-			for (int i = (sortedArray.length - 1); i >= 0; i--) {
-				if (sortedArray[i].mediaType().equals(type) && getCreator(sortedArray[i]).equals(creator)) {
-					return sortedArray[i];
-				}
-			}
-		case "min":
-			for (IMedia media : sortedArray) {
-				if (media.mediaType().equals(type) &&  getCreator(media).equals(creator)) {
-					return media;
-				}
-			}
-		default:
-			return null;
-		}
+	
+	private Scanner input;
+	private IBinarySearchTree<IMedia> tree;
+	
+	private static ITreeIterator<IMedia> generateIterator(IBinarySearchTree<IMedia> tree) {
+		ITreeIterator<IMedia> iterator = new IsmailTarator<IMedia>(tree);
+		return iterator;
 	}
 	
-	private static void printRangePriced(int price, String higherLower, IMedia[] sortedArray) {
-		boolean printFlag = (higherLower.equals("higher")) ? false : true;
-		IMedia checker = new Book("At the Mountains of Madness", price, 1936, "H.P. Lovecraft");
-		for (IMedia media : sortedArray) {
-			if (printFlag) {
-				System.out.println(media);
-			} else if (media.compareTo(checker) >= 0) {
-				printFlag = !printFlag;
-			}
-		}
-	}
-
-	private static void printArray(IMedia keyObject, IMedia[] sortedArray, boolean reverse) {
-		IMedia[] filteredArray;
-		if (keyObject != null) {
-			filteredArray = ArrayOperations.filter(keyObject, sortedArray);
-		} else {
-			filteredArray = sortedArray;
-		}
-		if (reverse) {
-			filteredArray = ArrayOperations.reverse(filteredArray);
-		}
-		System.out.println(ArrayOperations.convertToString(filteredArray));
-	}
-	
-	private static String takeUserInput(String prompt, Scanner userInput) {
+	private String takeUserInput(String prompt) {
 		System.out.println(prompt);
-		String input = userInput.next();
-		return input;
-	}
-
-	private static void minMaxInputs(IMedia[] sortedArray, Scanner userInput) {
-		String authorMin = takeUserInput("Enter the name of the author whose lowest priced book you want to see: ", userInput);
-		System.out.println(returnByPrice("min", "Book", authorMin, sortedArray));
-		String authorMax = takeUserInput("Enter the name of the author whose highest priced book you want to see: ", userInput);
-		System.out.println(returnByPrice("max", "Book", authorMax, sortedArray));
-		String directorMin = takeUserInput("Enter the name of the director whose lowest priced movie you want to see: ", userInput);
-		System.out.println(returnByPrice("min", "Movie", directorMin, sortedArray));
-		String directorMax = takeUserInput("Enter the name of the director whose highest priced movie you want to see: ", userInput);
-		System.out.println(returnByPrice("max", "Movie", directorMax, sortedArray));
+		String output = input.next();
+		return output;
 	}
 	
-	private static void rangeInputs(IMedia[] sortedArray, Scanner userInput) {
-		int rangeGreater = Integer.parseInt(takeUserInput("Enter the price of which the more expensive media will be printed: ", userInput));
-		printRangePriced(rangeGreater, "higher", sortedArray);
-		int rangeLower = Integer.parseInt(takeUserInput("Enter the prive of which the cheaper media will be printed: ", userInput));
-		printRangePriced(rangeLower, "lower", sortedArray);
-	}
-	
-	private static void sortInputs(IMedia[] sortedArray) {
-		Book bookExample = new Book("At the Mountains of Madness", 12, 1936, "H.P. Lovecraft");
-		Movie movieExample = new Movie("Arrival", 26, 2016, "Denis Villeneuve", "Jeremy Renner", "Amy Adams");
-		printArray(null, sortedArray, true);
-		printArray(null, sortedArray, false);
-		printArray(bookExample, sortedArray, true);
-		printArray(bookExample, sortedArray, false);
-		printArray(movieExample, sortedArray, true);
-		printArray(movieExample, sortedArray, false);
-	}
-
-	public static void userInput(IBinarySearchTree<IMedia> tree) {
-		Scanner userInput = new Scanner(System.in);
-		ITreeIterator<IMedia> ismailTarator = new IsmailTarator<IMedia>(tree);
-		IMedia[] sortedArray = new IMedia[tree.getNumberOfNodes() - 1]; // TODO
-		for (int i = 0; i < tree.getNumberOfNodes() - 1; i++) // TODO
-		{
-			sortedArray[i] = ismailTarator.next();
-//			System.out.println(sortedArray[i]);
+	/**
+	 * Return if a given media type fits to the criteria
+	 * @param mediaObject - Object to be tested
+	 * @param max - Previous max value
+	 * @param type - Type of the value we wish
+	 * @return True if fits.
+	 */
+	private static boolean isMax(IMedia mediaObject, int max, String type) {
+		if (type.equals("Media")) {
+			if (mediaObject.mediaPrice() >= max) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			if (mediaObject.mediaType().equals(type) && mediaObject.mediaPrice()  >= max) {
+				return true;
+			} else {
+				return false;
+			}
 		}
-//		System.out.println(Arrays.toString(sortedArray));
-//		minMaxInputs(sortedArray, userInput);
-		rangeInputs(sortedArray, userInput);
-//		sortInputs(sortedArray);
-		userInput.close();
+	}
+	
+	private static boolean isCreator(IMedia current, String type, String creator) {
+		String creatorCheck;
+		boolean check;
+		switch (current.mediaType()) {
+		case "Book":
+			creatorCheck = ((Book) current).getAuthor();
+			break;
+		default:
+			creatorCheck = ((Movie) current).getDirector();
+			break;
+		}
+		check = creator.equals(creatorCheck);
+		return check;
+	}
+	
+	private static IMedia returnMediaWithHighest(IBinarySearchTree<IMedia> tree, String type, String creator) {
+		ITreeIterator<IMedia> iterator = generateIterator(tree);
+		int maxPrice = 0;
+		IMedia maxMedia = null;
+		IMedia current;
+		while (iterator.hasNext()) {
+			current = iterator.next();
+			if (current == null) {
+				System.out.println("NULL SHOULDN'T BE THERE M8");
+				continue;
+			}
+			if (isMax(current, maxPrice, type)) {
+				if (isCreator(current, type, creator)) {
+						maxPrice = current.mediaPrice();
+						maxMedia = current;
+				}
+			}
+		}
+		return maxMedia;	
+	}
+	
+	private static IMedia returnMediaWithLowest(IBinarySearchTree<IMedia> tree, String type, String creator) {
+		ITreeIterator<IMedia> iterator = generateIterator(tree);
+		IMedia maxMedia = null;
+		IMedia current;
+		while (iterator.hasNext()) {
+			current = iterator.next();
+			if (isCreator(current, type, creator)) {
+				maxMedia = current;
+				break;
+			}
+		}
+		return maxMedia;
+	}
+	
+	private static String returnPriceLimited(IBinarySearchTree<IMedia> tree, int price, String key) {
+		String output = "";
+		ITreeIterator<IMedia> iterator = generateIterator(tree);
+		boolean flag = false;
+		IMedia current;
+		if (key.equals("lower")) {
+			flag = true;
+		}
+		while(iterator.hasNext()) {
+			current = iterator.next();
+			if (current.mediaPrice() >= price) {
+				flag = !flag;
+			}
+			if (flag) {
+				output += current.toString() + " ";
+			}
+		}
+		return output;
+	}
+
+	private void printDesAsc(IMedia[] array, boolean reverse, String type) {
+		IMedia[] workingArray = Arrays.copyOf(array, array.length);
+		String output;
+		if (reverse) {
+			workingArray = ArrayOperations.reverse(workingArray);
+		}
+		if (type == null) {
+			;
+		} else if (type.equals("Book")) {
+			Book keyObject = new Book("At the Mountains of Madness", 0, 1932, "Howard Phillips Lovecraft");
+			workingArray = ArrayOperations.filter(keyObject, workingArray);
+		} else {
+			Movie keyObject = new Movie("Arrival", 0, 2016, "Denis Villeneuve", "Jeremy Renner", "Amy Adams");
+			workingArray = ArrayOperations.filter(keyObject, workingArray);
+		}
+		output = ArrayOperations.convertToString(workingArray);
+		System.out.println(output);
+	}
+	
+	private void printLowHigh() {
+		System.out.println(
+				returnMediaWithHighest(tree,"Book", takeUserInput(
+						"Enter author name for most expensive book.")).toString());
+		System.out.println(
+				returnMediaWithLowest(tree, "Book", takeUserInput(
+						"Enter the author name for the cheapest book")).toString());
+		System.out.println(returnMediaWithHighest(tree, "Movie", takeUserInput(
+				"Enter the director name for the most expensive movie")).toString());
+		System.out.println(returnMediaWithHighest(tree, "Movie", takeUserInput(
+				"Enter the director name for the cheapest movie")).toString());
+	}
+	
+	private void printRanged() {
+		System.out.println(
+				returnPriceLimited(tree, Integer.parseInt(takeUserInput(
+						"Input the price more expensive media will be printed")), "higher"));
+		System.out.println(
+				returnPriceLimited(tree, Integer.parseInt(takeUserInput(
+						"Input the price cheaper media will be printed")), "lower"));
+	}
+	
+	private void printArrays() {
+		IMedia[] treeArray = new IMedia[tree.getNumberOfNodes()];
+		ITreeIterator<IMedia> iterator = generateIterator(tree);
+		int i = 0;
+		while (iterator.hasNext()) {
+			treeArray[i] = iterator.next();
+			i++;
+		}
+		printDesAsc(treeArray, false, null);
+		printDesAsc(treeArray, true, null);
+		printDesAsc(treeArray, false, "Book");
+		printDesAsc(treeArray, true, "Book");
+		printDesAsc(treeArray, false, "Movie");
+		printDesAsc(treeArray, true, "Movie");
+	}
+
+	public UserInput(IBinarySearchTree<IMedia> tree) {
+		this.input = new Scanner(System.in);
+		this.tree = tree;
+//		printLowHigh();
+//		printRanged();
+		printArrays();
+		input.close();
 	}
 }

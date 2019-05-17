@@ -51,6 +51,9 @@ public class ArrayOperations {
 	public static <T> String convertToString(T[] array) {
 		String outputString = "[";
 		for (int i = 0; i < array.length; i++) {
+			if (array[i] == null) {
+				continue;
+			}
 			outputString += array[i].toString();
 			if (i < array.length - 1) {
 				outputString += ", ";
