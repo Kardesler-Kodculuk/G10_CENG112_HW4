@@ -24,7 +24,7 @@ public class IsmailTarator<T extends Comparable<? super T>> implements ITreeIter
 	@Override
 	public boolean hasNext()
 	{
-		if (currentNode.getNext() != null)
+		if (currentNode != null)
 		{
 			return true;
 		}
@@ -40,8 +40,9 @@ public class IsmailTarator<T extends Comparable<? super T>> implements ITreeIter
 	{
 		if (hasNext())
 		{
+			T currentElement = (T) currentNode.getElement();
 			currentNode = currentNode.getNext();
-			return (T) currentNode.getElement();
+			return currentElement;
 		}
 		else
 		{
