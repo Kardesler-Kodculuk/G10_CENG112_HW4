@@ -69,15 +69,15 @@ public class Book implements IMedia
 	@Override
 	public int compareTo(IMedia o)
 	{
-		if (this.price > o.mediaPrice())
+		if (this.price > o.mediaPrice()) // if bigger
 		{
 			return 1;
 		}
-		else if (this.price == o.mediaPrice())
+		else if (this.price == o.mediaPrice()) // if equals
 		{
 			return 0;
 		}
-		else
+		else // if smaller
 		{
 			return -1;
 		}
@@ -86,7 +86,7 @@ public class Book implements IMedia
 	@Override
 	public boolean equals(IMedia media)
 	{
-		if (this.compareTo(media) == 0)
+		if (this.compareTo(media) == 0) // if equals
 		{
 			return true;
 		}
