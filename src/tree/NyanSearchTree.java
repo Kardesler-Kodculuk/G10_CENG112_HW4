@@ -92,7 +92,7 @@ class NyanBinaryNode<T extends Comparable<? super T>> implements IBinaryNode<T>,
 	 * @return if bigger 1, if smaller -1, if equals 0.
 	 */
 	public int compareTo(IBinaryNode<T> other) {
-		if (! equals(other)) {
+		if (! equals(other) && other.getElement() != null) {
 			return this.element.compareTo((T) other.getElement());
 		} else {
 			return 0;
