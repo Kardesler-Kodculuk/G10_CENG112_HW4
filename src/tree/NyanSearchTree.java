@@ -278,26 +278,6 @@ public class NyanSearchTree<T extends Comparable<T>> implements IBinarySearchTre
 		return entry;
 	}
 	
-	/**
-	 * Traverse the list inorder
-	 * @param rootNode Current node.
-	 * @param traversalArray array the nodes will be added to.
-	 * @param indexContainer index that can be shared between recursion.
-	private IBinaryNode<T> getNode(T element) {
-		IBinaryNode<T> resultNode;
-		IBinaryNode<T> currentNode;
-		IBinarySearchTree<T> copyTree = new NyanSearchTree<T>(rootNode);
-		ITreeIterator<T> treeIterator = new IsmailTarator<T>(copyTree);
-		while (treeIterator.hasNext()) {
-			 IBinary T = treeIterator.next();
-			if (currentNode.getElement().equals(element)) {
-				resultNode = currentNode;
-			}
-		}
-		return null;
-	}
-	*/
-	
 	private IBinaryNode<T> findProgenitor(IBinaryNode<T> rootNode, IBinaryNode<T> searchNode) {
 		if (rootNode.isLeaf()) {
 			return null;

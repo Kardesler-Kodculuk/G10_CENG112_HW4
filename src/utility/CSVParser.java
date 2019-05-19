@@ -113,7 +113,6 @@ public class CSVParser {
 		lineCount = countLines(fileName);
 		medias = new IMedia[lineCount];
 		populateMedias(fileName);
-		ArrayOperations.sort(medias);
 		this.tree = generateSearchTree(medias); 
 	}
 	
