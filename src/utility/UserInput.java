@@ -118,7 +118,6 @@ public class UserInput {
 	 */
 	private static IMedia returnMediaWithLowest(IBinarySearchTree<IMedia> tree, String type, String creator) {
 		ITreeIterator<IMedia> iterator = generateIterator(tree);
-		IMedia maxMedia = null;
 		IMedia current;
 		while (iterator.hasNext()) {
 			current = iterator.next();
@@ -157,56 +156,6 @@ public class UserInput {
 		}
 		return output;
 	}
-
-	/**
-	 * Written specifically to reverse the media array.
-	 * @param array
-	 * @return
-	 */
-	private static IMedia[] reverseMediaArray(IMedia[] array) {
-		IMedia[] reversedArray = new IMedia[array.length];
-		int lastIndex = array.length - 1;
-		for (int i = 0; i < array.length; i++) {
-			reversedArray[i] = array[lastIndex - i];
-		}
-		return reversedArray;
-	}
-
-	/**
-	 * Get the frequency of the book/movie objects inside media array.
-	 * @param array IMedia array
-	 * @param type Type, either book or movie
-	 * @return Count of Movie/Book
-	 */
-	private static int getFrequencyOfMediaObject(IMedia[] array, String type) {
-		int frequencyCount = 0;
-		for (IMedia mediaObj : array) {
-			if (mediaObj.mediaType().equals(type)) {
-				frequencyCount++;
-			}
-		}
-		return frequencyCount;
-	}
-	
-	/**
-	 * Filter the IMedia array into a Book/Movie array.
-	 * @param keyObj Object of movie or book.
-	 * @param array IMedia array.
-	 * @return
-	 */
-	private static<K extends IMedia> IMedia[] filterArray(K keyObj, IMedia[] array) {
-		String type = keyObj.mediaType();
-		int frequencyOfKinIMeida = getFrequencyOfMediaObject(array, type);
-		IMedia[] exportArray =  new IMedia[frequencyOfKinIMeida];
-		int j = 0;
-		for (IMedia mediaObj : array) {
-			if (mediaObj.mediaType().equals(type)) {
-				exportArray[j] = mediaObj;
-				j++;
-			}
-		}
-		return exportArray;
-	};
 	
 	/**
 	 * Print the arrays in decreasing or increasing order.
@@ -218,16 +167,16 @@ public class UserInput {
 		IMedia[] workingArray = Arrays.copyOf(array, array.length);
 		String output;
 		if (reverse) {
-			workingArray = reverseMediaArray(workingArray);
+			workingArray = ArrayOperations.reverseMediaArray(workingArray);
 		}
 		if (type == null) {
 			;
 		} else if (type.equals("Book")) {
 			Book keyObject = new Book("At the Mountains of Madness", 0, 1932, "Howard Phillips Lovecraft");
-			workingArray = filterArray(keyObject, workingArray);
+			workingArray = ArrayOperations.filterArray(keyObject, workingArray);
 		} else {
 			Movie keyObject = new Movie("Arrival", 0, 2016, "Denis Villeneuve", "Jeremy Renner", "Amy Adams");
-			workingArray = filterArray(keyObject, workingArray);
+			workingArray = ArrayOperations.filterArray(keyObject, workingArray);
 		}
 		output = ArrayOperations.convertToString(workingArray);
 		System.out.println(output);
