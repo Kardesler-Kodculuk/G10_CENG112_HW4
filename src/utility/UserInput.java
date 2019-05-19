@@ -1,27 +1,36 @@
 package utility;
 
-import java.lang.reflect.Executable;
 import java.util.Arrays;
 import java.util.Scanner;
-
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
-
 import internals.*;
 import tree.IBinarySearchTree;
 import tree.ITreeIterator;
 import tree.IsmailTarator;
-import tree.NyanTreeIterator;
 
+/**
+ * The class that handles input-output events between the user and the program.
+ *
+ */
 public class UserInput {
 	
 	private Scanner input;
 	private IBinarySearchTree<IMedia> tree;
 	
+	/**
+	 * Generate an iterator for the tree
+	 * @param tree
+	 * @return
+	 */
 	private static ITreeIterator<IMedia> generateIterator(IBinarySearchTree<IMedia> tree) {
 		ITreeIterator<IMedia> iterator = new IsmailTarator<IMedia>(tree);
 		return iterator;
 	}
 	
+	/**
+	 * Take input from the user. This is basically analogous to Python's input built-in function.
+	 * @param prompt
+	 * @return
+	 */
 	private String takeUserInput(String prompt) {
 		System.out.println(prompt);
 		String output = input.nextLine();
@@ -51,6 +60,12 @@ public class UserInput {
 		}
 	}
 	
+	/**
+	 * Checks if media's creator (author/director) equals to the given creator.
+	 * @param current Media to be checked
+	 * @param creator Creator name to be checked
+	 * @return
+	 */
 	private static boolean isCreator(IMedia current, String creator) {
 		String creatorCheck;
 		boolean check;
@@ -66,6 +81,13 @@ public class UserInput {
 		return check;
 	}
 	
+	/**
+	 * Return the media with highest price of the class type with the creator name creator.
+	 * @param tree - Tree
+	 * @param type - Type of the IMedia, must be an implementation of.
+	 * @param creator - Name of the director/author.
+	 * @return
+	 */
 	private static IMedia returnMediaWithHighest(IBinarySearchTree<IMedia> tree, String type, String creator) {
 		ITreeIterator<IMedia> iterator = generateIterator(tree);
 		int maxPrice = 0;
@@ -74,7 +96,7 @@ public class UserInput {
 		while (iterator.hasNext()) {
 			current = iterator.next();
 			if (current == null) {
-				System.out.println("NULL SHOULDN'T BE THERE M8");
+				System.out.println("Null error.");
 				continue;
 			}
 			if (isMax(current, maxPrice, type)) {
@@ -87,6 +109,13 @@ public class UserInput {
 		return maxMedia;	
 	}
 	
+	/**
+	 * Same as returnMediaWithHighest but instead the lowest method.
+	 * @param tree - Tree
+	 * @param type - Type of the IMedia
+	 * @param creator - Creator name Director/Author
+	 * @return
+	 */
 	private static IMedia returnMediaWithLowest(IBinarySearchTree<IMedia> tree, String type, String creator) {
 		ITreeIterator<IMedia> iterator = generateIterator(tree);
 		IMedia maxMedia = null;
@@ -100,6 +129,13 @@ public class UserInput {
 		return null;
 	}
 	
+	/**
+	 * Return a String consisting of the IMedia objects limited by a price range.
+	 * @param tree Tree
+	 * @param price Price range floor or ceiling
+	 * @param key Whether you want lower or higher prices.
+	 * @return
+	 */
 	private static String returnPriceLimited(IBinarySearchTree<IMedia> tree, int price, String key) {
 		String output = "";
 		ITreeIterator<IMedia> iterator = generateIterator(tree);
@@ -122,6 +158,11 @@ public class UserInput {
 		return output;
 	}
 
+	/**
+	 * Written specifically to reverse the media array.
+	 * @param array
+	 * @return
+	 */
 	private static IMedia[] reverseMediaArray(IMedia[] array) {
 		IMedia[] reversedArray = new IMedia[array.length];
 		int lastIndex = array.length - 1;
@@ -131,6 +172,12 @@ public class UserInput {
 		return reversedArray;
 	}
 
+	/**
+	 * Get the frequency of the book/movie objects inside media array.
+	 * @param array IMedia array
+	 * @param type Type, either book or movie
+	 * @return Count of Movie/Book
+	 */
 	private static int getFrequencyOfMediaObject(IMedia[] array, String type) {
 		int frequencyCount = 0;
 		for (IMedia mediaObj : array) {
@@ -141,6 +188,12 @@ public class UserInput {
 		return frequencyCount;
 	}
 	
+	/**
+	 * Filter the IMedia array into a Book/Movie array.
+	 * @param keyObj Object of movie or book.
+	 * @param array IMedia array.
+	 * @return
+	 */
 	private static<K extends IMedia> IMedia[] filterArray(K keyObj, IMedia[] array) {
 		String type = keyObj.mediaType();
 		int frequencyOfKinIMeida = getFrequencyOfMediaObject(array, type);
@@ -155,6 +208,12 @@ public class UserInput {
 		return exportArray;
 	};
 	
+	/**
+	 * Print the arrays in decreasing or increasing order.
+	 * @param array IMedia array to be printed
+	 * @param reverse Reverse the array, boolean.
+	 * @param type Type of the printed output, IMedia, Book, Movie.
+	 */
 	private void printDesAsc(IMedia[] array, boolean reverse, String type) {
 		IMedia[] workingArray = Arrays.copyOf(array, array.length);
 		String output;
@@ -174,6 +233,9 @@ public class UserInput {
 		System.out.println(output);
 	}
 	
+	/**
+	 * Print lowest highest members of Book/Movie
+	 */
 	private void printLowHigh() {
 		try {
 			System.out.println(
@@ -200,6 +262,9 @@ public class UserInput {
 		}
 	}
 	
+	/**
+	 * Print the outputs limited by a price range.
+	 */
 	private void printRanged() {
 		System.out.println(
 				returnPriceLimited(tree, Integer.parseInt(takeUserInput(
@@ -209,6 +274,9 @@ public class UserInput {
 						"Input the price cheaper media will be printed")), "lower"));
 	}
 	
+	/**
+	 * Print the array increasing decreasing.
+	 */
 	private void printArrays() {
 		IMedia[] treeArray = new IMedia[tree.getNumberOfNodes()];
 		ITreeIterator<IMedia> iterator = generateIterator(tree);
