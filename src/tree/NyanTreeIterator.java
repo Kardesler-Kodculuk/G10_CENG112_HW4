@@ -1,7 +1,4 @@
 package tree;
-
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 public class NyanTreeIterator<T extends Comparable<? super T>> implements ITreeIterator<T> {
 
 	private IBinarySearchTree<T> tree;
@@ -27,6 +24,6 @@ public class NyanTreeIterator<T extends Comparable<? super T>> implements ITreeI
 
 	@Override
 	public T remove() {
-		throw new NotImplementedException();
+		return null;
 	}
 }

@@ -10,7 +10,7 @@ import internals.IMedia;
  */
 public class IsmailTarator<T extends Comparable<? super T>> implements ITreeIterator<T>
 {
-	private IBinaryNode<IMedia> currentNode;
+	private IBinaryNode<T> currentNode;
 	
 	/**
 	 * @param currentNode
@@ -18,7 +18,7 @@ public class IsmailTarator<T extends Comparable<? super T>> implements ITreeIter
 	@SuppressWarnings("unchecked")
 	public IsmailTarator(IBinarySearchTree<T> tree)
 	{
-		this.currentNode = (IBinaryNode<IMedia>) tree.getRootNode();
+		this.currentNode = (IBinaryNode<T>) tree.getRootNode();
 	}
 
 	@Override
