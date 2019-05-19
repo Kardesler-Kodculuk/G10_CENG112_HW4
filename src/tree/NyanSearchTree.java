@@ -131,11 +131,14 @@ public class NyanSearchTree<T extends Comparable<T>> implements IBinarySearchTre
 	}
 	
 	public NyanSearchTree(NyanBinaryNode<T> rootNode) {
-		if (rootNode != null) {
-			this.height = 1;
-			this.nodeCount = 1;
+		if (rootNode.getElement() == null) {
+			this.height = 0;
+			this.nodeCount = 0;
+			this.rootNode = null;
+		} else {
+			this.height = this.nodeCount = 1;
+			this.rootNode = rootNode;
 		}
-		this.rootNode = rootNode;
 	}
 
 	@Override

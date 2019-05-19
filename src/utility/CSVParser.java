@@ -38,27 +38,12 @@ public class CSVParser {
 	}
 	
 	/**
-	 * Narrow down the array and add elements in a way that will make the tree balanced.
-	 * @param feedingArray - Array elements are drawn from.
-	 * @param tree - tree elements will be added to.
-	 * @param start - starting index.
-	 * @param end - ending index.
-	 */
-	private static void narrowingFeeder(IMedia[] feedingArray, IBinarySearchTree tree, int start, int end) {
-		int mid = (end - start)/2;
-		tree.addEntry(feedingArray[mid]);
-		narrowingFeeder(feedingArray, tree, start, mid);
-		narrowingFeeder(feedingArray, tree, mid + 1, end);
-	}
-
-	/**
 	 * Create a balanced binary search tree from the elements of an array.
 	 * @param feedingArray Array elements are stored in.
 	 * @return the tree object.
 	 */
 	private static IBinarySearchTree<IMedia> generateSearchTree(IMedia[] feedingArray) {
 	IBinarySearchTree<IMedia> tree = new NyanSearchTree<IMedia>();
-//	narrowingFeeder(feedingArray, tree, 0, feedingArray.length);
 	for (IMedia media : feedingArray) {
 		tree.addEntry(media);
 	}

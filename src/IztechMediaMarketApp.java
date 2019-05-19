@@ -16,7 +16,11 @@ public class IztechMediaMarketApp {
 		for (Integer entry: cat) {
 			tree.addEntry(entry);
 		Book book = new Book("Cat", 15, 34, "Ismail Tarator");
-		System.out.println(book.mediaType()); */		
+		System.out.println(book.mediaType()); *//*		
+		IBinarySearchTree<Integer> tree = new NyanSearchTree<Integer>();
+		tree.addEntry(12);
+		tree.addEntry(10);
+		tree.addEntry(14); */
 		}
 	}
 
