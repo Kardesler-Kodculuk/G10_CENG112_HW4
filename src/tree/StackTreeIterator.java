@@ -3,15 +3,13 @@ package tree;
 import stack.IStack;
 import stack.LinkedStack;
 
-public class NyanTreeIterator<T extends Comparable<? super T>> implements ITreeIterator<T> {
+public class StackTreeIterator<T extends Comparable<? super T>> implements ITreeIterator<T> {
 
-	private IBinarySearchTree<T> tree;
 	private IBinaryNode<T> active;
 	private IStack<IBinaryNode<T>> traversalStack;
 	
 	
-	public NyanTreeIterator(IBinarySearchTree<T> tree) {
-		this.tree = tree;
+	public StackTreeIterator(IBinarySearchTree<T> tree) {
 		this.active = tree.getRootNode();
 		traversalStack = new LinkedStack<IBinaryNode<T>>(tree.getRootNode());
 		traverseToEnd();
@@ -22,6 +20,9 @@ public class NyanTreeIterator<T extends Comparable<? super T>> implements ITreeI
 		return !traversalStack.isEmpty();
 	}
 
+	/**
+	 * Traverses until it finds the leftmost node.
+	 */
 	private void traverseToEnd() {
 		while (active != null) {
 			if (traversalStack.peek() != active) {

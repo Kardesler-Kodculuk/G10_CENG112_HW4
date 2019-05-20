@@ -81,6 +81,7 @@ class NyanBinaryNode<T extends Comparable<? super T>> implements IBinaryNode<T>,
 		if (obj == null) return false;
 		if (!obj.getClass().equals(obj.getClass())) return false;
 		else {
+			@SuppressWarnings("unchecked")
 			NyanBinaryNode<T> compareNode = (NyanBinaryNode<T>) obj;
 			return element.equals(compareNode.element);
 		}
@@ -116,21 +117,21 @@ class NyanBinaryNode<T extends Comparable<? super T>> implements IBinaryNode<T>,
 /**
  * Binary search tree implementation.
  */
-public class NyanSearchTree<T extends Comparable<T>> implements IBinarySearchTree<T> {
+public class LinkedBinarySearchTree<T extends Comparable<T>> implements IBinarySearchTree<T> {
 
 	private int height;
 	private int nodeCount;
 	private NyanBinaryNode<T> rootNode;
 	
-	public NyanSearchTree() {
+	public LinkedBinarySearchTree() {
 		this((T) null);
 	}
 	
-	public NyanSearchTree(T element) {
+	public LinkedBinarySearchTree(T element) {
 		this(new NyanBinaryNode<T>(element));
 	}
 	
-	public NyanSearchTree(NyanBinaryNode<T> rootNode) {
+	public LinkedBinarySearchTree(NyanBinaryNode<T> rootNode) {
 		if (rootNode.getElement() == null) {
 			this.height = 0;
 			this.nodeCount = 0;
@@ -324,17 +325,6 @@ public class NyanSearchTree<T extends Comparable<T>> implements IBinarySearchTre
 		} else {
 			return progenitorNode;
 		}
-	}
-
-	@Override
-	public T[] toArray() {
-		return null;
-	}
-	
-	@Override
-	public String toString() {
-		String output = "";
-		return null;
 	}
 	
 	@Override

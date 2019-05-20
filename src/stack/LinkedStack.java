@@ -3,11 +3,9 @@
  */
 package stack;
 
-import tree.NyanSearchTree;
-
 class Node<T> {
 	private T element;
-	private Node next;
+	private Node<T> next;
 
 	/**
 	 * @return the element
@@ -26,14 +24,14 @@ class Node<T> {
 	/**
 	 * @return the next
 	 */
-	public Node getNext() {
+	public Node<T> getNext() {
 		return next;
 	}
 
 	/**
 	 * @param next the next to set
 	 */
-	public void setNext(Node next) {
+	public void setNext(Node<T> next) {
 		this.next = next;
 	}
 	
@@ -45,7 +43,7 @@ class Node<T> {
 		this(element, null);
 	}
 	
-	public Node(T element, Node next) {
+	public Node(T element, Node<T> next) {
 		this.element = element;
 		this.next = next;
 	}
@@ -70,8 +68,7 @@ public class LinkedStack<T> implements IStack<T> {
 			this.nodeCount = 1;
 		}
 	} 
-	
-	
+
 	@Override
 	public T pop() {
 		if (isEmpty()) {

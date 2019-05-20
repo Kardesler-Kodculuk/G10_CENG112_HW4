@@ -41,7 +41,7 @@ public class CSVParser {
 	 * @return the tree object.
 	 */
 	private static IBinarySearchTree<IMedia> generateSearchTree(IMedia[] feedingArray) {
-	IBinarySearchTree<IMedia> tree = new NyanSearchTree<IMedia>();
+	IBinarySearchTree<IMedia> tree = new LinkedBinarySearchTree<IMedia>();
 	for (IMedia media : feedingArray) {
 		tree.addEntry(media);
 	}
