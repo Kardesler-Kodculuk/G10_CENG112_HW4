@@ -238,13 +238,13 @@ public class NyanSearchTree<T extends Comparable<T>> implements IBinarySearchTre
 			if (node.getNode("R") == null) {
 				node.setNode("R", entryNode);
 			} else {
-				addEntry(entryNode, node.getNode("R"), depth);
+				addEntry(entryNode, node.getNode("R"), depth + 1);
 			}
 		} else {
 			if (node.getNode("L") == null) {
 				node.setNode("L", entryNode);
 			} else {
-				addEntry(entryNode, node.getNode("L"), depth);
+				addEntry(entryNode, node.getNode("L"), depth + 1);
 			}
 		}
 	}
