@@ -278,7 +278,13 @@ public class LinkedBinarySearchTree<T extends Comparable<T>> implements IBinaryS
 		}		
 		return entry;
 	}
-	
+
+	/**
+	 * Find the progenitor, the parent of a given node.
+	 * @param rootNode
+	 * @param searchNode
+	 * @return
+	 */
 	private IBinaryNode<T> findProgenitor(IBinaryNode<T> rootNode, IBinaryNode<T> searchNode) {
 		if (rootNode.isLeaf()) {
 			return null;
@@ -309,6 +315,12 @@ public class LinkedBinarySearchTree<T extends Comparable<T>> implements IBinaryS
 		}
 	}
 	
+	/**
+	 * Find the right/left of the progenitor.
+	 * @param progenitorNode
+	 * @param searchNode
+	 * @return
+	 */
 	private String findProgenitorSide(IBinaryNode<T> progenitorNode, IBinaryNode<T> searchNode) {
 		IBinaryNode<T> right = progenitorNode.getNode("R");
 		if (right != null && right.equals(searchNode)) {
@@ -318,6 +330,11 @@ public class LinkedBinarySearchTree<T extends Comparable<T>> implements IBinaryS
 		}
 	}
 	
+	/**
+	 * Return the rightmost node.
+	 * @param progenitorNode
+	 * @return
+	 */
 	private IBinaryNode<T> findRightmostNode(IBinaryNode<T> progenitorNode) {
 		IBinaryNode<T> nextRightNode = progenitorNode.getNext();
 		if (nextRightNode != null) {
