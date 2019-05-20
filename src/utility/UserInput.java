@@ -6,6 +6,7 @@ import internals.*;
 import tree.IBinarySearchTree;
 import tree.ITreeIterator;
 import tree.IsmailTarator;
+import tree.NyanTreeIterator;
 
 /**
  * The class that handles input-output events between the user and the program.
@@ -22,7 +23,7 @@ public class UserInput {
 	 * @return
 	 */
 	private static ITreeIterator<IMedia> generateIterator(IBinarySearchTree<IMedia> tree) {
-		ITreeIterator<IMedia> iterator = new IsmailTarator<IMedia>(tree);
+		ITreeIterator<IMedia> iterator = new NyanTreeIterator<IMedia>(tree);
 		return iterator;
 	}
 	

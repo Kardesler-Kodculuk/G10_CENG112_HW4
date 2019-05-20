@@ -3,6 +3,8 @@
  */
 package stack;
 
+import tree.NyanSearchTree;
+
 class Node<T> {
 	private T element;
 	private Node next;
@@ -56,6 +58,20 @@ public class LinkedStack<T> implements IStack<T> {
 	private Node<T> top;
 	private int nodeCount;
 
+	public LinkedStack() {
+		this.top = null;
+		this.nodeCount = 0;
+	} public LinkedStack(T element) {
+		if (element != null) {
+			this.top = new Node<T>(element);
+			this.nodeCount = 1;
+		} else {
+			this.top = null;
+			this.nodeCount = 1;
+		}
+	} 
+	
+	
 	@Override
 	public T pop() {
 		if (isEmpty()) {

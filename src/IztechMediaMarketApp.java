@@ -20,7 +20,15 @@ public class IztechMediaMarketApp {
 		IBinarySearchTree<Integer> tree = new NyanSearchTree<Integer>();
 		tree.addEntry(12);
 		tree.addEntry(10);
-		tree.addEntry(14); */
-		}
+		tree.addEntry(14);
+		tree.addEntry(9);
+		tree.addEntry(11);
+		tree.addEntry(13);
+		tree.addEntry(15);
+		ITreeIterator<Integer> iterator = new NyanTreeIterator<Integer>(tree);
+		while(iterator.hasNext()) {
+			System.out.println(iterator.next());
+		}*/ 
 	}
+}
 
